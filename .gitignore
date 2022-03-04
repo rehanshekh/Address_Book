@@ -1,0 +1,54 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+
+/out/production/EmpWageCase/com/*
+/out/production/Practice_Problems/com/*
+/out/production/EmpWageCase/com/*
+*iml
+/Class Problems/out/production/untitled/com/blz/
+/Class Problems/out/production/untitled/com/blz/*
+/Core_Programs/out/production/Core_Programs/com/blz/
+/Core_Programs/out/production/Core_Programs/com/blz/*
+/SL/out/production/SL/com/blz/
+/SL/out/production/SL/com/blz/*
+out/production/SL/com/blz/
+/Address_Book/out/production/untitled104/com/oops/
+/Address_Book/out/production/untitled104/com/oops/*
+/out/production/untitled104/com/oops/
+/out/production/untitled104/com/oops/*
+/out/*
+out/*
+/out/
