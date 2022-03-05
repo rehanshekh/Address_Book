@@ -1,6 +1,14 @@
 package com.oops;
 
+import java.util.Comparator;
+
 public class Contacts {
+
+    public static Comparator<Contacts> ConNameComparator = (s1, s2) -> {
+        String ContactName1 = s1.getFirstName().toUpperCase();
+        String ContactName2 = s2.getFirstName().toUpperCase();
+        return ContactName1.compareTo(ContactName2);
+    };
 
     private final String firstName;
     private final String lastName;
@@ -34,7 +42,6 @@ public class Contacts {
         return address;
     }
 
-
     public String getCity() {
         return city;
     }
@@ -43,11 +50,9 @@ public class Contacts {
         return state;
     }
 
-
     public int getZip() {
         return zip;
     }
-
 
     public long getPhoneNo() {
         return phoneNo;
@@ -56,5 +61,4 @@ public class Contacts {
     public String getEmail() {
         return email;
     }
-
 }
