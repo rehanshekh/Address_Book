@@ -30,7 +30,6 @@ public class Contacts {
         return lastName;
     }
 
-
     public String getAddress() {
         return address;
     }
