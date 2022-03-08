@@ -1,15 +1,15 @@
 package com.oops;
 
 import java.util.*;
-import java.util.Collections;
-import java.util.List;
-public class AddressBook {
 
-    List<Contacts> list = new ArrayList<>();
+
+public class AddressBook implements IAddressBook {
+    String newName;
+    LinkedList<Contacts> list = new LinkedList<>();
+    Map<String, Contacts> newList = new HashMap<>();
     Scanner in = new Scanner(System.in);
 
     public void setUpInfo() {
-
         System.out.println("How many contacts you want to create");
         int contactcount = in.nextInt();
         for (int i = 1; i <= contactcount; i++) {
@@ -31,13 +31,17 @@ public class AddressBook {
             String email = in.next();
             Contacts contact = new Contacts(firstname, lastname, address, city, state, zip, phone, email);
             list.add(contact);
+            newList.put(firstname, contact);
             Collections.addAll(list);
         }
     }
 
     public void displayListItems() {
-        list.sort(Contacts.ConNameComparator);
+        Collections.sort(list);
+        System.out.println("Enter the Address Book Name:");
+        newName = in.next();
         for (Contacts someinfo : list) {
+            someinfo.setCompanyName((newName));
             System.out.println(someinfo.getFirstName() + someinfo.getLastName() + "  " + someinfo.getAddress() + "  " + someinfo.getCity() + "  " + someinfo.getState() + "  " + someinfo.getZip() + "  " + someinfo.getPhoneNo() + "  " + someinfo.getEmail());
         }
     }
@@ -77,4 +81,10 @@ public class AddressBook {
         list.removeIf(someinfo -> someinfo.getFirstName().contains(newName));
         displayListItems();
     }
+
+    @Override
+    public String getcompanyName(String company) {
+        return newList.get(company).companyName;
+    }
+
 }
