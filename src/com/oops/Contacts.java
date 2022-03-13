@@ -30,6 +30,20 @@ public class Contacts {
         email = myEmail;
     }
 
+    @Override
+    public String toString() {
+        return
+                '\n' + "firstName='" + firstName + '\'' +
+                        ", lastName='" + lastName + '\'' +
+                        ", address='" + address + '\'' +
+                        ", city='" + city + '\'' +
+                        ", state='" + state + '\'' +
+                        ", zip=" + zip +
+                        ", phoneNo=" + phoneNo +
+                        ", email='" + email + '\''
+                ;
+    }
+
     public String getFirstName() {
         return firstName;
     }
