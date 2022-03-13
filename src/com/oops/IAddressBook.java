@@ -1,23 +1,24 @@
 package com.oops;
 
-import java.util.Comparator;
+public interface IAddressBook {
+    void displayListItems();
 
-public class Contacts {
+    String getcompanyName(String company);
+}
 
-    public static Comparator<Contacts> ConNameComparator = (s1, s2) -> {
-        String ContactName1 = s1.getFirstName().toUpperCase();
-        String ContactName2 = s2.getFirstName().toUpperCase();
-        return ContactName1.compareTo(ContactName2);
-    };
+class Contacts implements Comparable<Contacts> {
 
-    private final String firstName;
-    private final String lastName;
-    private final String address;
-    private final String city;
-    private final String state;
-    private final int zip;
-    private final long phoneNo;
-    private final String email;
+
+    public final String firstName;
+    public final String lastName;
+    public final String address;
+    public final String city;
+    public final String state;
+    public final int zip;
+    public final long phoneNo;
+    public final String email;
+    public String companyName;
+
 
     public Contacts(String myFirstName, String myLastName, String myAddress, String myCity, String myState, int myZip, long myPhoneNo, String myEmail) {
         firstName = myFirstName;
@@ -28,6 +29,7 @@ public class Contacts {
         zip = myZip;
         phoneNo = myPhoneNo;
         email = myEmail;
+        companyName = null;
     }
 
     @Override
@@ -52,6 +54,10 @@ public class Contacts {
         return lastName;
     }
 
+    public void setCompanyName(String companyname) {
+        companyName = companyname;
+    }
+
     public String getAddress() {
         return address;
     }
@@ -74,5 +80,15 @@ public class Contacts {
 
     public String getEmail() {
         return email;
+    }
+
+    @Override
+    public String toString() {
+        return "Company for " + firstName + " is: " + companyName;
+    }
+
+    @Override
+    public int compareTo(Contacts obj) {
+        return this.firstName.compareTo(obj.firstName);
     }
 }
