@@ -1,6 +1,7 @@
 package com.oops;
 
 
+
 public class Contacts {
 
 
@@ -13,6 +14,9 @@ public class Contacts {
     private  long phoneNo;
     private  String email;
 
+    public Contacts() {
+    }
+
     public Contacts(String myFirstName, String myLastName, String myAddress, String myCity, String myState, int myZip, long myPhoneNo, String myEmail) {
         firstName = myFirstName;
         lastName = myLastName;
@@ -24,6 +28,13 @@ public class Contacts {
         email = myEmail;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contacts contacts = (Contacts) o;
+        return firstName.equals(contacts.firstName);
+    }
     public String getFirstName() {
         return firstName;
     }
@@ -87,4 +98,5 @@ public class Contacts {
     public String getEmail() {
         return email;
     }
+
 }

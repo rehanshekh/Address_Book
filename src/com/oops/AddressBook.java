@@ -145,8 +145,10 @@ public class AddressBook {
             if (map.containsKey(accountName)) {
                 System.out.println("Enter the first name of the Contact to be added to AddressBook");
                 String name = in.next();
+                Contacts contact1 = new Contacts();
+                contact1.setFirstName(name);
                 for (Contacts info : map.get(accountName)) {
-                    if (Objects.equals(info.getFirstName(), name)) {
+                    if (info.equals(contact1)) {
                         System.out.println();
                         System.out.println(info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
                         System.out.println("Contact already exists in Account, please use option 2");
@@ -182,5 +184,45 @@ public class AddressBook {
         displayListItems();
     }
 
+    public void search() {
+        System.out.println("Enter 1 to Search a Contact by City/Press 2 to Search a Contact by State");
+        int input = in.nextInt();
+        switch (input) {
+            case 1 -> {
+                int count1 = 0;
+                System.out.println("Enter the City Name");
+                String city = in.next();
+                for (String key : map.keySet()) {
+                    for (Contacts info : map.get(key)) {
+                        if (info.getCity().equals(city)) {
+                            count1++;
+                            System.out.println(key + " " + info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
+                        }
+                    }
+                }
+                if (count1 == 0) {
+                    System.out.println("No such Contact with city " + city + " in any of the Address Books");
+                }
+            }
+            case 2 -> {
+                int count2 = 0;
+                System.out.println("Enter the State Name");
+                String state = in.next();
+                for (String key : map.keySet()) {
+                    for (Contacts info : map.get(key)) {
+                        if (info.getState().equals(state)) {
+                            count2++;
+                            System.out.println(key + " " + info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
+                        }
+                    }
+                }
+                if (count2 == 0) {
+                    System.out.println("No such Contact with state " + state + " in any of the Address Books");
+                }
+            }
+            default -> {
+            }
+        }
+    }
 }
 
