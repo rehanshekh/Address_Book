@@ -15,6 +15,7 @@ public class AddressBookMain {
         for (i = 1; i > j; i++) {
             System.out.println("Press 1 to continue creating Address Book/Press 2 to edit a contact in an Address Book/Press 3 to delete a contact from an Address Book/" +
                     "Press 4 to Add a New Contact to an Address Book/Press 5 to Search a Contact by State or City/Press 0 to exit the program");
+            System.out.println("Press 6 to display cityMap");
             int operation = in.nextInt();
             switch (operation) {
                 case 1 -> {
@@ -25,6 +26,7 @@ public class AddressBookMain {
                 case 3 -> contactInfo.deleteContact();
                 case 4 -> contactInfo.add();
                 case 5 -> contactInfo.search();
+                case 6 -> contactInfo.displayCityMap();
                 default -> j = i + 2;
             }
         }

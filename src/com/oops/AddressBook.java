@@ -5,7 +5,9 @@ import java.util.*;
 public class AddressBook {
 
     private final Map<String, List<Contacts>> map = new LinkedHashMap<>();
+    private final Map<String, List<Contacts>> cityMap = new LinkedHashMap<>();
     private final Scanner in = new Scanner(System.in);
+    private final List<String> cityName = new ArrayList<>();
 
     public void setUpInfo() {
 
@@ -36,6 +38,13 @@ public class AddressBook {
                 String email = in.next();
                 Contacts contact = new Contacts(firstname, lastname, address, city, state, zip, phone, email);
                 map.get(bookName).add(contact);
+                if (cityName == null || !cityName.contains(city)) {
+                    cityName.add(city);
+                    cityMap.put(city, new LinkedList<>());
+                    cityMap.get(city).add(contact);
+                } else {
+                    cityMap.get(city).add(contact);
+                }
             }
         }
     }
@@ -75,6 +84,7 @@ public class AddressBook {
                         info.setAddress(address);
                         System.out.println("Enter the City:");
                         String city = in.next();
+                        String oldCity = info.getCity();
                         info.setCity(city);
                         System.out.println("Enter the State Name:");
                         String state = in.next();
@@ -88,9 +98,26 @@ public class AddressBook {
                         System.out.println("Enter email id:");
                         String email = in.next();
                         info.setEmail(email);
-                        // list.set(index, new Contacts(firstname, lastname, address, city, state, zip, phone, email));
+                        Contacts contact = new Contacts(firstname, lastname, address, city, state, zip, phone, email);
                         i = 3;
                         isPresent = true;
+                        if (!cityName.contains(city)) {
+                            cityName.add(city);
+                            cityMap.put(city, new LinkedList<>());
+                            for (Contacts person : cityMap.get(oldCity)) {
+                                if (Objects.equals(person.getFirstName(), newName)) {
+                                    cityMap.get(oldCity).remove(person);
+                                }
+                            }
+                            cityMap.get(city).add(contact);
+                        } else {
+                            for (Contacts person : cityMap.get(info.getCity())) {
+                                if (Objects.equals(person.getFirstName(), newName)) {
+                                    cityMap.get(city).remove(person);
+                                    cityMap.get(city).add(contact);
+                                }
+                            }
+                        }
                         break;
                     }
                 }
@@ -121,6 +148,9 @@ public class AddressBook {
                         map.get(name).remove(info);
                         isPresent = true;
                         i = 3;
+                        if (cityName.contains(info.getCity())) {
+                            cityMap.get(info.getCity()).remove(info);
+                        }
                         break;
                     }
                 }
@@ -174,6 +204,14 @@ public class AddressBook {
                     String email = in.next();
                     Contacts contact = new Contacts(name, lastname, address, city, state, zip, phone, email);
                     map.get(accountName).add(contact);
+                    if (!cityName.contains(city)) {
+                        cityName.add(city);
+                        cityMap.put(city, new LinkedList<>());
+                        cityMap.get(city).add(contact);
+                    } else {
+                        cityMap.get(city).add(contact);
+                    }
+
                     j = 3;
                 }
             } else {
@@ -203,6 +241,7 @@ public class AddressBook {
                 if (count1 == 0) {
                     System.out.println("No such Contact with city " + city + " in any of the Address Books");
                 }
+                System.out.println(count1 + " Contacts found with " + city + " city");
             }
             case 2 -> {
                 int count2 = 0;
@@ -219,10 +258,24 @@ public class AddressBook {
                 if (count2 == 0) {
                     System.out.println("No such Contact with state " + state + " in any of the Address Books");
                 }
+                System.out.println(count2 + " Contacts found with " + state + " state");
             }
             default -> {
             }
         }
     }
+
+    public void displayCityMap() {
+        int i = 0;
+        for (String key : cityMap.keySet()) {
+            i++;
+            System.out.println("City #" + i + ": " + key);
+            for (Contacts info : cityMap.get(key)) {
+                System.out.println(info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
+            }
+            System.out.println();
+        }
+    }
+
 }
 
