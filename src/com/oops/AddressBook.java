@@ -37,8 +37,21 @@ public class AddressBook {
                 System.out.println("Enter email id:");
                 String email = in.next();
                 Contacts contact = new Contacts(firstname, lastname, address, city, state, zip, phone, email);
-                map.get(bookName).add(contact);
-                if (cityName == null || !cityName.contains(city)) {
+                int match = 0;
+                if (map.get(bookName).isEmpty()) {
+                    map.get(bookName).add(contact);
+                } else if (map.get(bookName).size() >= 1) {
+                    for (Contacts info : map.get(bookName)) {
+                        if (info.getFirstName().equals(firstname)) {
+                            match = 1;
+                            System.out.println("Contact already exists in the Address Book");
+                        }
+                    }
+                    if (match == 0) {
+                        map.get(bookName).add(contact);
+                    }
+                }
+                if (!cityName.contains(city)) {
                     cityName.add(city);
                     cityMap.put(city, new LinkedList<>());
                     cityMap.get(city).add(contact);
@@ -54,7 +67,8 @@ public class AddressBook {
         for (String key : map.keySet()) {
             i++;
             System.out.println("Address Book #" + i + ": " + key);
-            for (Contacts info : map.get(key)) {
+            List<Contacts> sortedList = map.get(key).stream().sorted(Comparator.comparing(Contacts::getFirstName)).toList();
+            for (Contacts info : sortedList) {
                 System.out.println(info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
             }
             System.out.println();
@@ -104,11 +118,7 @@ public class AddressBook {
                         if (!cityName.contains(city)) {
                             cityName.add(city);
                             cityMap.put(city, new LinkedList<>());
-                            for (Contacts person : cityMap.get(oldCity)) {
-                                if (Objects.equals(person.getFirstName(), newName)) {
-                                    cityMap.get(oldCity).remove(person);
-                                }
-                            }
+                            cityMap.get(oldCity).removeIf(person -> Objects.equals(person.getFirstName(), newName));
                             cityMap.get(city).add(contact);
                         } else {
                             for (Contacts person : cityMap.get(info.getCity())) {
@@ -178,7 +188,7 @@ public class AddressBook {
                 Contacts contact1 = new Contacts();
                 contact1.setFirstName(name);
                 for (Contacts info : map.get(accountName)) {
-                    if (info.equals(contact1)) {
+                    if (info.getFirstName().equals(contact1.getFirstName())) {
                         System.out.println();
                         System.out.println(info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
                         System.out.println("Contact already exists in Account, please use option 2");
@@ -276,6 +286,33 @@ public class AddressBook {
             System.out.println();
         }
     }
+
+    public void sortByCity() {
+        int i = 0;
+        for (String key : map.keySet()) {
+            i++;
+            System.out.println("Address Book #" + i + ": " + key);
+            List<Contacts> sortedList = map.get(key).stream().sorted(Comparator.comparing(Contacts::getCity)).toList();
+            for (Contacts info : sortedList) {
+                System.out.println(info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
+            }
+            System.out.println();
+        }
+    }
+
+    public void sortByState() {
+        int i = 0;
+        for (String key : map.keySet()) {
+            i++;
+            System.out.println("Address Book #" + i + ": " + key);
+            List<Contacts> sortedList = map.get(key).stream().sorted(Comparator.comparing(Contacts::getState)).toList();
+            for (Contacts info : sortedList) {
+                System.out.println(info.getFirstName() + info.getLastName() + "  " + info.getAddress() + "  " + info.getCity() + "  " + info.getState() + "  " + info.getZip() + "  " + info.getPhoneNo() + "  " + info.getEmail());
+            }
+            System.out.println();
+        }
+    }
+
 
 }
 
