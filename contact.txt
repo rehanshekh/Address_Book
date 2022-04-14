@@ -1,0 +1,3 @@
+Contacts{firstName='Alina', lastName='Sayed', address='Wadi', city='Mumbai', state='Mah', zip=65464, phoneNo=65264646, email='sdsds'}
+Contacts{firstName='Aliya', lastName='Sayed', address='Garden', city='Mumbra', state='Maha', zip=56464, phoneNo=4445454, email='dsfdcdsf'}
+Contacts{firstName='Rameez', lastName='Saikh', address='Kismay', city='Mumbra', state='Maha', zip=64564, phoneNo=6564646, email='esfds'}

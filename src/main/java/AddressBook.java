@@ -1,6 +1,11 @@
-package com.oops;
+import com.opencsv.CSVWriter;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.*;
+
 
 public class AddressBook {
 
@@ -314,5 +319,44 @@ public class AddressBook {
     }
 
 
+    public void writeToFile() {
+        String fileName = "contact.txt";
+        StringBuffer contactBuffer = new StringBuffer();
+
+        int i = 0;
+        for (String key : map.keySet()) {
+            i++;
+            System.out.println("Address Book #" + i + ": " + key + " Contacts Written");
+            List<Contacts> sortedList = map.get(key).stream().sorted(Comparator.comparing(Contacts::getState)).toList();
+            sortedList.forEach(contact -> {
+                String contactData = contact.toString().concat("\n");
+                contactBuffer.append(contactData);
+            });
+            try {
+                Files.write(Paths.get(fileName), contactBuffer.toString().getBytes());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            System.out.println();
+
+        }
+    }
+
+    public void writeToCSV() throws IOException {
+        List<String[]> csvData = new LinkedList<>();
+        CSVWriter write = new CSVWriter(new FileWriter("contacts.csv"));
+        int i = 0;
+        for (String key : map.keySet()) {
+            i++;
+            System.out.println("Address Book #" + i + ": " + key);
+            List<Contacts> sortedList = map.get(key).stream().sorted(Comparator.comparing(Contacts::getState)).toList();
+            for (Contacts info : sortedList) {
+                String[] data = {info.toString()};
+                csvData.add(data);
+            }
+        }
+        write.writeAll(csvData);
+        write.flush();
+    }
 }
 
