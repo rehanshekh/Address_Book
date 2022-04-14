@@ -1,4 +1,5 @@
 import com.opencsv.CSVWriter;
+import org.json.JSONObject;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -357,6 +358,25 @@ public class AddressBook {
         }
         write.writeAll(csvData);
         write.flush();
+    }
+
+    public void writeToJSON() throws IOException {
+        JSONObject obj = new JSONObject();
+        int i = 0;
+        int j = 0;
+        for (String key : map.keySet()) {
+            i++;
+            System.out.println("Address Book #" + i + ": " + key);
+            List<Contacts> sortedList = map.get(key).stream().sorted(Comparator.comparing(Contacts::getState)).toList();
+
+            for (Contacts info : sortedList) {
+                j++;
+                obj.put("Contact" + j, info.toString());
+            }
+        }
+        FileWriter file = new FileWriter("contact.json");
+        file.write(obj.toString());
+        file.close();
     }
 }
 
