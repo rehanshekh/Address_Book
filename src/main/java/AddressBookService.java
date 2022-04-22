@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,16 +18,7 @@ public class AddressBookService {
 
     private List<ContactsData> readData() {
         String sql = "select * from contacts; ";
-        List<ContactsData> contactDataList = new ArrayList<>();
-        try {
-            Connection connection = this.getConnection();
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            contactDataList = this.getContactData(result);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return contactDataList;
+        return getEmployeePayrollDataUsingDB(sql);
     }
 
     private List<ContactsData> getContactData(ResultSet result) {
@@ -42,7 +34,8 @@ public class AddressBookService {
                 int zip = result.getInt("zip");
                 long phone = result.getLong("phone_no");
                 String email = result.getString("email");
-                employeePayrollList.add(new ContactsData(id, firstname, lastname, address, city, state, zip, phone, email));
+                LocalDate startDate = result.getDate("start").toLocalDate();
+                employeePayrollList.add(new ContactsData(id, firstname, lastname, address, city, state, zip, phone, email, startDate));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -85,5 +78,32 @@ public class AddressBookService {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    public List<ContactsData> readAddressBookDataForDateRange(String read, LocalDate startDate, LocalDate endDate) {
+        if (read.equals("read"))
+            return getEmployeePayrollForDateRange(startDate, endDate);
+        return null;
+
+    }
+
+    private List<ContactsData> getEmployeePayrollForDateRange(LocalDate startDate, LocalDate endDate) {
+        String sql = String.format("select * from contacts where start between '%s' and '%s';", Date.valueOf(startDate)
+                , Date.valueOf(endDate));
+
+        return this.getEmployeePayrollDataUsingDB(sql);
+    }
+
+    private List<ContactsData> getEmployeePayrollDataUsingDB(String sql) {
+        List<ContactsData> contactDataList = new ArrayList<>();
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            contactDataList = this.getContactData(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return contactDataList;
     }
 }

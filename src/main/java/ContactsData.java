@@ -1,3 +1,5 @@
+import java.time.LocalDate;
+
 public class ContactsData {
     int id;
     String firstname;
@@ -8,8 +10,9 @@ public class ContactsData {
     int zip;
     long phone;
     String email;
+    LocalDate startDate;
 
-    public ContactsData(int id, String firstname, String lastname, String address, String city, String state, int zip, long phone, String email) {
+    public ContactsData(int id, String firstname, String lastname, String address, String city, String state, int zip, long phone, String email,LocalDate startDate) {
         this.id = id;
         this.firstname = firstname;
         this.lastname = lastname;
@@ -19,6 +22,7 @@ public class ContactsData {
         this.zip = zip;
         this.phone = phone;
         this.email = email;
+        this.startDate=startDate;
     }
 
     public boolean equals(Object o) {
