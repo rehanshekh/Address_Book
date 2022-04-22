@@ -375,7 +375,7 @@ public class AddressBook {
             }
         }
         FileWriter file = new FileWriter("contact.json");
-        file.write(obj.toString());
+        file.write(obj.toString(4));
         file.close();
     }
 }

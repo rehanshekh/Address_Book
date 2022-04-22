@@ -1,2 +1,2 @@
-Contacts{firstName='jyhj', lastName='jhjbjn', address='jbnkm', city='jnkm', state='hbjn', zip=6564, phoneNo=545454, email='jbnkm'}
-Contacts{firstName='guhjk', lastName='njk', address='gyhj', city='vghbjn', state='hbjn', zip=565, phoneNo=59566, email='hbj'}
+Contacts{firstName='Rehan', lastName='Shaikh', address='Garden', city='sdfsd', state='dfgvd', zip=464, phoneNo=656466, email='sfvsdf'}
+Contacts{firstName='Humai', lastName='sdfcsf', address='fsdfcsd', city='dsvcds', state='dsfvdsf', zip=6644, phoneNo=5666466, email='fdvd'}
