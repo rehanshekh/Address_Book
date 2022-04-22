@@ -61,4 +61,29 @@ public class AddressBookService {
         return connection;
 
     }
+
+    private ContactsData getContactsData(String namePresent) {
+        return this.contactsDataList.stream().filter(employeePayrollDataItem -> employeePayrollDataItem.firstname.equals(namePresent)).findFirst().orElse(null);
+    }
+
+    public int updateContactName(String namePresent, String nameChange) {
+        int result = updateEmployeeData(namePresent, nameChange);
+        if (result == 0) return result;
+        ContactsData contactsData = this.getContactsData(namePresent);
+        if (contactsData != null) {
+            contactsData.firstname = nameChange;
+        }
+        return result;
+    }
+
+    private int updateEmployeeData(String namePresent, String nameChange) {
+        String sql = String.format("update contacts set firstname = '%s' where firstname = '%s';", nameChange, namePresent);
+        try (Connection connection = this.getConnection()) {
+            Statement statement = connection.createStatement();
+            return statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 }
