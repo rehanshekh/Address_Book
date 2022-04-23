@@ -396,5 +396,17 @@ public class AddressBook {
         readClass.readJSON();
 
     }
+
+    public void readText() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("contact.txt"));
+            String read;
+            while((read=br.readLine())!=null){
+                System.out.println(read);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
 

@@ -18,7 +18,7 @@ public class AddressBookMain {
                         "Press 4 to Add a New Contact to an Address Book/Press 5 to Search a Contact by State or City");
                 System.out.println("Press 6 to display cityMap/Press 7 to sort and display Contacts by City/Press 8 to sort and display Contacts by State");
                 System.out.println("Press 9 to write Contacts to csv file/Press 10 to exit and write all contacts to a file");
-                System.out.println("Press 11 to read a CSV File/Press 12 to read a JSON File/Press 0 to exit the program");
+                System.out.println("Press 11 to read a CSV File/Press 12 to read a JSON File/Press 13 to read a text file/Press 0 to exit the program");
                 int operation = in.nextInt();
                 switch (operation) {
                     case 1 -> {
@@ -36,6 +36,7 @@ public class AddressBookMain {
                     case 10-> contactInfo.writeToJSON();
                     case 11-> contactInfo.readCSV();
                     case 12-> contactInfo.readJSON();
+                    case 13-> contactInfo.readText();
                     default -> {
                         contactInfo.writeToFile();
                         j = i + 2;

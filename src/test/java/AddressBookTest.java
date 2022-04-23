@@ -24,7 +24,7 @@ public class AddressBookTest {
     }
 
     @Test
-    public void givenPayrollData_WhenAverageSalaryByGender_ShouldReturnProperValue() {
+    public void givenContactData_WhenAskedByDateRange_ShouldReturnProperValue() {
         AddressBookService addressBookService = new AddressBookService();
         addressBookService.readAddressBookData("read");
         LocalDate startDate = LocalDate.of(2018, 01, 01);
