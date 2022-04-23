@@ -1,8 +1,7 @@
 import com.opencsv.CSVWriter;
 import org.json.JSONObject;
 
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
@@ -377,6 +376,25 @@ public class AddressBook {
         FileWriter file = new FileWriter("contact.json");
         file.write(obj.toString(4));
         file.close();
+    }
+
+    public void readCSV() {
+        try {
+            Scanner sc = new Scanner(new File("contacts.csv"));
+            sc.useDelimiter(",");
+            while (sc.hasNext()) {
+                System.out.print(sc.next());
+            }
+            sc.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void readJSON() {
+        ReadClass readClass = new ReadClass();
+        readClass.readJSON();
+
     }
 }
 

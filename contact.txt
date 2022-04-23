@@ -1,2 +1,1 @@
-Contacts{firstName='Rehan', lastName='Shaikh', address='Garden', city='sdfsd', state='dfgvd', zip=464, phoneNo=656466, email='sfvsdf'}
-Contacts{firstName='Humai', lastName='sdfcsf', address='fsdfcsd', city='dsvcds', state='dsfvdsf', zip=6644, phoneNo=5666466, email='fdvd'}
+Contacts{firstName='1', lastName='1', address='1', city='1', state='1', zip=1, phoneNo=1, email='1'}
