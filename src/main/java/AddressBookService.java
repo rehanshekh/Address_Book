@@ -5,7 +5,7 @@ import java.util.List;
 
 public class AddressBookService {
     public List<ContactsData> contactsDataList;
-
+    private PreparedStatement contactCountStatement;
     public AddressBookService() {
     }
 
@@ -105,5 +105,57 @@ public class AddressBookService {
             e.printStackTrace();
         }
         return contactDataList;
+    }
+
+    public int getCountOfContactsByCityOrState(String city) {
+        int count = 0;
+        if (this.contactCountStatement == null)
+            this.prepareStatementForContactCount();
+        try {
+            contactCountStatement.setString(1, city);
+            ResultSet resultSet = contactCountStatement.executeQuery();
+            count = this.getContactCountData(resultSet);
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    private void prepareStatementForContactCount() {
+
+        try {
+            Connection connection = this.getConnection();
+            String sql = "select count(firstname) as count from contacts where city= ?;";
+            contactCountStatement = connection.prepareStatement(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int getContactCountUsingDB(String sql) {
+        int count = 0;
+        try {
+            Connection connection = this.getConnection();
+            Statement statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(sql);
+            count = this.getContactCountData(result);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
+    }
+
+    private int getContactCountData(ResultSet result) {
+        int count = 0;
+        try {
+            while (result.next()) {
+                count = result.getInt("count");
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return count;
     }
 }

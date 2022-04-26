@@ -7,7 +7,7 @@ import java.util.List;
 public class AddressBookTest {
 
     @Test
-    public void givenAddressBookInDB_WhenRetrieved_ShouldMatchContactCount(){
+    public void givenAddressBookInDB_WhenRetrieved_ShouldMatchContactCount() {
         AddressBookService addressBookService = new AddressBookService();
         List<ContactsData> employeePayrollData = addressBookService.readAddressBookData("read");
         Assert.assertEquals(5, employeePayrollData.size());
@@ -19,7 +19,7 @@ public class AddressBookTest {
         List<ContactsData> addressBookData = addressBookService.readAddressBookData("read");
         int changes = addressBookService.updateContactName("Rehan", "Elon");
         Assert.assertEquals(1, changes);
-       // boolean result = addressBookService.checkAddressBookInSyncWithDB("Elon");
+        // boolean result = addressBookService.checkAddressBookInSyncWithDB("Elon");
         // Assert.assertTrue(result);
     }
 
@@ -33,6 +33,12 @@ public class AddressBookTest {
         Assert.assertEquals(4, addressBookData.size());
     }
 
+    @Test
+    public void whenAskedNumberOfContacts_ByCityOrState_ShouldReturnExactCount() {
+        AddressBookService addressBookService = new AddressBookService();
+        int count = addressBookService.getCountOfContactsByCityOrState("Mumbra");
+        Assert.assertEquals(1, count);
+    }
 
 
 }
