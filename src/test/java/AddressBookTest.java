@@ -40,6 +40,14 @@ public class AddressBookTest {
         Assert.assertEquals(1, count);
     }
 
+    @Test
+    public void givenNewContact_WhenAdded_ShouldSyncWithDB() {
+        AddressBookService addressBookService = new AddressBookService();
+        addressBookService.readAddressBookData("read");
+        int changes = addressBookService.addContactToAddressBook("Bruce", "Wayne", "Wayne_Tower", "Gotham", "LA", 400521, 98154789, "bat@gmail.com");
+        Assert.assertEquals(1, changes);
+    }
+
 
 }
 

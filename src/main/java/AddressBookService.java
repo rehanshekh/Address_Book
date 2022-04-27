@@ -6,6 +6,7 @@ import java.util.List;
 public class AddressBookService {
     public List<ContactsData> contactsDataList;
     private PreparedStatement contactCountStatement;
+
     public AddressBookService() {
     }
 
@@ -34,8 +35,7 @@ public class AddressBookService {
                 int zip = result.getInt("zip");
                 long phone = result.getLong("phone_no");
                 String email = result.getString("email");
-                LocalDate startDate = result.getDate("start").toLocalDate();
-                employeePayrollList.add(new ContactsData(id, firstname, lastname, address, city, state, zip, phone, email, startDate));
+                employeePayrollList.add(new ContactsData(id, firstname, lastname, address, city, state, zip, phone, email, LocalDate.now()));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -158,4 +158,77 @@ public class AddressBookService {
         }
         return count;
     }
+
+    public int addContactToAddressBook(String firstname, String lastname, String address, String city, String state, int zip, int phone, String email) {
+        int changes;
+        contactsDataList.add(addToAddressBook(firstname, lastname, address, city, state, zip, phone, email));
+        if (addToAddressBook(firstname, lastname, address, city, state, zip, phone, email) == null) {
+            changes = 0;
+        } else changes = 1;
+
+        return changes;
+    }
+
+    private ContactsData addToAddressBook(String firstname, String lastname, String address, String city, String state, int zip, int phone, String email) {
+        int contactId = -1;
+        ContactsData contactsData = null;
+        Connection connection = null;
+        try {
+            connection = this.getConnection();
+            connection.setAutoCommit(false);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            assert connection != null;
+            try (Statement statement = connection.createStatement()) {
+                String sql = String.format("insert into contacts (firstname,lastname,address,city,state,zip,phone_no,email) values ('%s','%s','%s','%s','%s','%s','%s','%s')", firstname, lastname, address, city, state, zip, phone, email);
+                int rowAffected = statement.executeUpdate(sql, statement.RETURN_GENERATED_KEYS);
+                if (rowAffected == 1) {
+                    ResultSet resultSet = statement.getGeneratedKeys();
+                    if (resultSet.next()) contactId = resultSet.getInt(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        try (Statement statement = connection.createStatement()) {
+            String sql = String.format("insert into contact_type values ('%s', '%s');",
+                    contactId, 3);
+            int rowAffected = statement.executeUpdate(sql);
+            if (rowAffected == 1) {
+                contactsData = new ContactsData(contactId, firstname, lastname, address, city, state, zip, phone, email, LocalDate.now());
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                connection.rollback();
+                return contactsData;
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        try {
+            connection.commit();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            return contactsData;
+        }
+    }
 }
+
