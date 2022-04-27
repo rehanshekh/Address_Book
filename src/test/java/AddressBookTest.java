@@ -19,8 +19,8 @@ public class AddressBookTest {
         List<ContactsData> addressBookData = addressBookService.readAddressBookData("read");
         int changes = addressBookService.updateContactName("Rehan", "Elon");
         Assert.assertEquals(1, changes);
-        // boolean result = addressBookService.checkAddressBookInSyncWithDB("Elon");
-        // Assert.assertTrue(result);
+//        boolean result = addressBookService.checkAddressBookInSyncWithDB("Elon");
+//        Assert.assertTrue(result);
     }
 
     @Test
@@ -38,6 +38,14 @@ public class AddressBookTest {
         AddressBookService addressBookService = new AddressBookService();
         int count = addressBookService.getCountOfContactsByCityOrState("Mumbra");
         Assert.assertEquals(1, count);
+    }
+
+    @Test
+    public void givenNewContact_WhenAdded_ShouldSyncWithDB() {
+        AddressBookService addressBookService = new AddressBookService();
+        addressBookService.readAddressBookData("read");
+        int changes = addressBookService.addContactToAddressBook("Bruce", "Wayne", "Wayne_Tower", "Gotham", "LA", 400521, 98154789, "bat@gmail.com");
+        Assert.assertEquals(1, changes);
     }
 
 
